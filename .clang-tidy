@@ -1,0 +1,10 @@
+Checks: >
+    -*,
+    clang-analyzer-*,
+    bugprone-*,
+    cert-*,
+    readability-*,
+    modernize-*,
+    performance-*
+WarningsAsErrors: false
+HeaderFilterRegex: 'include/.*'

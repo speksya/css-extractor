@@ -1,0 +1,25 @@
+BasedOnStyle: LLVM
+
+IncludeCategories:
+  - Regex: '^<.*\.h>'
+    Priority: 1
+  - Regex: '^<.*'
+    Priority: 2
+  - Regex: '^".*"'
+    Priority: 3
+IncludeBlocks: Regroup
+
+IndentWidth: 4
+UseTab: Never
+ColumnLimit: 100
+BreakBeforeBraces: Attach
+SpacesInParentheses: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+AlignAfterOpenBracket: DontAlign
+IndentCaseLabels: true
+PointerAlignment: Left
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackArguments: false
+BinPackParameters: false
+PenaltyBreakBeforeFirstCallParameter: 100
