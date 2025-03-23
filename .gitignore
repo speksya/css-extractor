@@ -20,9 +20,6 @@
 .cache/
 *.cache
 
-/evac-lexer
-/evac-lexer-debug
-
 compile_commands.json
 .deps/
 *.d
