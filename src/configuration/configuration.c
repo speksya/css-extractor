@@ -9,14 +9,12 @@
 #include "file/file.h"
 #include "toml/toml.h"
 
-#define CONFIGURATION_FILE "configuration.toml"
-
-#define CONFIGURATION_KEY "configuration"
+#define CONFIGURATION_FILE                    "configuration.toml"
+#define CONFIGURATION_KEY                     "configuration"
+#define CONFIGURATION_KEYS                    "keys"
 #define CONFIGURATION_CSS_MODULES_ENABLED_KEY "cssModulesEnabled"
-#define CONFIGURATION_KEYS "keys"
-
-#define CLASS_KEY "classnames"
-#define CSSMODULES "cssmodules"
+#define CLASS_KEY                             "classnames"
+#define CSSMODULES                            "cssmodules"
 
 static void configuration_free_keys(KeysArray* keys) {
     if (keys) {
