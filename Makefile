@@ -2,7 +2,6 @@ CC = gcc
 CFLAGS = -Wall -Wextra -I./include -I./external
 TARGET_RELEASE = build/release/css-extractor
 TARGET_DEBUG = build/debug/css-extractor
-INPUT_FILE = input
 
 APP_SOURCES = $(shell find src -name '*.c')
 LIB_SOURCES = $(shell find external -name '*.c')
@@ -41,22 +40,10 @@ lint:
 		$(APP_SOURCES)
 
 run: release
-	@if [ -f "$(INPUT_FILE)" ]; then \
-		echo "Running RELEASE build with $(INPUT_FILE)"; \
-		$(TARGET_RELEASE) "$(INPUT_FILE)"; \
-	else \
-		echo "Error: input not found in project root"; \
-		exit 1; \
-	fi
+	@$(TARGET_RELEASE) $(INPUT)
 
 run-debug: debug
-	@if [ -f "$(INPUT_FILE)" ]; then \
-		echo "Running DEBUG build with $(INPUT_FILE)"; \
-		$(TARGET_DEBUG) "$(INPUT_FILE)"; \
-	else \
-		echo "Error: input not found in project root"; \
-		exit 1; \
-	fi
+	@$(TARGET_RELEASE) $(INPUT)
 
 $(TARGET_RELEASE): $(RELEASE_OBJECTS)
 	@mkdir -p $(@D)
