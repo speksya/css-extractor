@@ -1,3 +1,4 @@
+#include <errno.h>
 #include <stdlib.h>
 
 #include "configuration/configuration.h"
@@ -7,6 +8,7 @@
 int main(int argc, char** argv) {
     if (argc < 2) {
         throw_error(FILE_NOT_SPECIFIED_NAME_ERROR);
+        exit(EINVAL);
     }
 
     const char* filename = *++argv;
