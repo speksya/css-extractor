@@ -5,6 +5,7 @@ TARGET_DEBUG = build/debug/css-extractor
 
 APP_SOURCES = $(shell find src -name '*.c')
 LIB_SOURCES = $(shell find external -name '*.c')
+HEADER_SOURCES = $(shell find src include -name '*.h')
 
 RELEASE_CFLAGS = -O3 -DNDEBUG
 DEBUG_CFLAGS = -g -O0 -DDEBUG
@@ -24,8 +25,8 @@ release: $(TARGET_RELEASE)
 debug: $(TARGET_DEBUG)
 
 format:
-	clang-format -i $(APP_SOURCES) --style=file
-	clang-tidy $(APP_SOURCES) -p compile_commands.json --config-file=.clang-tidy
+	clang-format -i $(APP_SOURCES) $(HEADER_SOURCES) --style=file
+	clang-tidy $(APP_SOURCES) $(HEADER_SOURCES) -p compile_commands.json --config-file=.clang-tidy
 
 lint:
 	cppcheck \

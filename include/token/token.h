@@ -5,7 +5,7 @@ typedef enum {
     TOKEN_IDENTIFIER,
     TOKEN_CLASSKEY,
     TOKEN_MODULE_KEY,
-    
+
     TOKEN_ASSIGN,
     TOKEN_LBRACE,
     TOKEN_RBRACE,
