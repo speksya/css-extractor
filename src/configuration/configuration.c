@@ -15,7 +15,7 @@
 #define CONFIGURATION_CSS_MODULES_ENABLED_KEY "cssModulesEnabled"
 #define CLASS_KEY                             "classnames"
 // TODO: remove this from configuration and get keys from import statement
-#define CSSMODULES                            "cssmodules"
+#define CSSMODULES "cssmodules"
 
 static void configuration_free_keys(KeysArray* keys) {
     if (keys) {
