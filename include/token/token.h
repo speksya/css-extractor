@@ -33,6 +33,8 @@ typedef enum {
 
     TOKEN_LOGICAL_OR,
     TOKEN_LOGICAL_AND,
+
+    TOKEN_EOF,
 } TokenType;
 
 typedef struct {
