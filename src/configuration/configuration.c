@@ -14,6 +14,7 @@
 #define CONFIGURATION_KEYS                    "keys"
 #define CONFIGURATION_CSS_MODULES_ENABLED_KEY "cssModulesEnabled"
 #define CLASS_KEY                             "classnames"
+// TODO: remove this from configuration and get keys from import statement
 #define CSSMODULES                            "cssmodules"
 
 static void configuration_free_keys(KeysArray* keys) {
@@ -103,6 +104,7 @@ static KeysArray* configuration_read_keys(const char* error,
     return keys;
 }
 
+// TODO: remove this from configuration and get keys from import statement
 static void configuration_read_css_modules(Configuration* configuration,
     const toml_table_t* toml_configuration) {
     const toml_table_t* css_modules = toml_table_in(toml_configuration, CSSMODULES);
