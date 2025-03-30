@@ -12,15 +12,10 @@
 
 #define CONFIGURATION_READ_CONFIG_ERROR "Error: Cannot parse configuration file"
 #define CONFIGURATION_MISSING_ERROR     "Error: Configuration missing"
-#define CONFIGURATION_MISSING_KEY_ERROR "Error: Configuration missing key"
 
 #define CLASSNAMES_MISSING_KEY_ERROR  "Error: classnames missing key"
 #define CLASSNAMES_MISSING_KEYS_ERROR "Error: please specify classnames keys"
 #define CLASSNAMES_WRONG_KEY_ERROR    "Error: classnames incorrect key"
-
-#define CSSMODULES_MISSING_KEY_ERROR  "Error: cssmodules missing key value"
-#define CSSMODULES_MISSING_KEYS_ERROR "Error: please specify cssmodules keys"
-#define CSSMODULES_WRONG_KEY_ERROR    "Error: cssmodules incorrect key value"
 
 void throw_error(const char* error);
 

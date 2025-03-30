@@ -9,13 +9,9 @@
 #include "file/file.h"
 #include "toml/toml.h"
 
-#define CONFIGURATION_FILE                    "configuration.toml"
-#define CONFIGURATION_KEY                     "configuration"
-#define CONFIGURATION_KEYS                    "keys"
-#define CONFIGURATION_CSS_MODULES_ENABLED_KEY "cssModulesEnabled"
-#define CLASS_KEY                             "classnames"
-// TODO: remove this from configuration and get keys from import statement
-#define CSSMODULES "cssmodules"
+#define CONFIGURATION_FILE "configuration.toml"
+#define CLASS_KEY          "classnames"
+#define CONFIGURATION_KEYS "keys"
 
 static void configuration_free_keys(KeysArray* keys) {
     if (keys) {
@@ -104,22 +100,6 @@ static KeysArray* configuration_read_keys(const char* error,
     return keys;
 }
 
-// TODO: remove this from configuration and get keys from import statement
-static void configuration_read_css_modules(Configuration* configuration,
-    const toml_table_t* toml_configuration) {
-    const toml_table_t* css_modules = toml_table_in(toml_configuration, CSSMODULES);
-    if (!css_modules && configuration->cssModulesEnabled) {
-        configuration_free(configuration);
-        throw_message_error(CONFIGURATION_MISSING_ERROR, CSSMODULES);
-        exit(ENOKEY);
-    }
-
-    configuration->cssModulesKeys = configuration_read_keys(CSSMODULES_MISSING_KEY_ERROR,
-        css_modules,
-        CSSMODULES_WRONG_KEY_ERROR,
-        CSSMODULES_MISSING_KEYS_ERROR);
-}
-
 static void configuration_read_class_names(Configuration* configuration,
     const toml_table_t* toml_configuration) {
     const toml_table_t* classNames = toml_table_in(toml_configuration, CLASS_KEY);
@@ -164,31 +144,7 @@ Configuration* configuration_read() {
         exit(EIO);
     }
 
-    const toml_table_t* toml_configuration = toml_table_in(toml, CONFIGURATION_KEY);
-    if (!toml_configuration) {
-        toml_free(toml);
-        configuration_free(configuration);
-        throw_message_error(CONFIGURATION_MISSING_ERROR, CONFIGURATION_KEY);
-        exit(ENOKEY);
-    }
-
-    toml_datum_t toml_cssModulesEnabled =
-        toml_bool_in(toml_configuration, CONFIGURATION_CSS_MODULES_ENABLED_KEY);
-    if (!toml_cssModulesEnabled.ok) {
-        toml_free(toml);
-        configuration_free(configuration);
-        throw_message_error(CONFIGURATION_MISSING_KEY_ERROR, CONFIGURATION_CSS_MODULES_ENABLED_KEY);
-        exit(ENOKEY);
-    }
-
-    configuration->cssModulesEnabled = toml_cssModulesEnabled.u.b;
-
     configuration_read_class_names(configuration, toml);
-
-    if (configuration->cssModulesEnabled) {
-        configuration_read_css_modules(configuration, toml);
-    }
-
     toml_free(toml);
 
     return configuration;

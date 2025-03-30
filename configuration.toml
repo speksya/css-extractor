@@ -1,8 +1,2 @@
-[configuration]
-cssModulesEnabled = true
-
 [classnames]
 keys = [ "c", "class", "className" ]
-
-[cssmodules]
-keys = [ "s", "style", "styles" ]
