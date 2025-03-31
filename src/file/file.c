@@ -1,7 +1,5 @@
 #include "file/file.h"
 
-#include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "errors/errors.h"
@@ -17,21 +15,21 @@ File* file_read(const char* name) {
     File* file_struct = malloc(sizeof(File));
     if (file_struct == NULL) {
         throw_error(ALLOCATION_ERROR);
-        exit(ENOMEM);
+        exit(EXIT_FAILURE);
     }
 
     FILE* file = fopen(name, "rb");
     if (file == NULL) {
         free(file_struct);
         throw_error(FILE_READ_ERROR);
-        exit(EIO);
+        exit(EXIT_FAILURE);
     }
 
     if (fseek(file, 0, SEEK_END) != 0) {
         free(file_struct);
         (void)fclose(file);
         throw_error(FILE_READ_ERROR);
-        exit(EIO);
+        exit(EXIT_FAILURE);
     }
 
     long file_size = ftell(file);
@@ -39,14 +37,14 @@ File* file_read(const char* name) {
         free(file_struct);
         (void)fclose(file);
         throw_error(FILE_READ_ERROR);
-        exit(EIO);
+        exit(EXIT_FAILURE);
     }
 
     if (fseek(file, 0, SEEK_SET) != 0) {
         free(file_struct);
         (void)fclose(file);
         throw_error(FILE_READ_ERROR);
-        exit(EIO);
+        exit(EXIT_FAILURE);
     }
 
     file_struct->file = file;

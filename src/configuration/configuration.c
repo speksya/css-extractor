@@ -1,7 +1,5 @@
 #include "configuration/configuration.h"
 
-#include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -35,7 +33,7 @@ static Configuration* configuration_init() {
     Configuration* configuration = malloc(sizeof(Configuration));
     if (configuration == NULL) {
         throw_error(ALLOCATION_ERROR);
-        exit(ENOMEM);
+        exit(EXIT_FAILURE);
     }
 
     configuration->classKeys = NULL;
@@ -49,14 +47,14 @@ static KeysArray* configuration_keys_init(size_t length) {
     KeysArray* keys = malloc(sizeof(KeysArray));
     if (keys == NULL) {
         throw_error(ALLOCATION_ERROR);
-        exit(ENOMEM);
+        exit(EXIT_FAILURE);
     }
 
     keys->keys = (char**)malloc(sizeof(char*) * length);
     if (keys->keys == NULL) {
         free(keys);
         throw_error(ALLOCATION_ERROR);
-        exit(ENOMEM);
+        exit(EXIT_FAILURE);
     }
 
     keys->length = length;
@@ -71,13 +69,13 @@ static KeysArray* configuration_read_keys(const char* error,
     const toml_array_t* table_keys = toml_array_in(table, CONFIGURATION_KEYS);
     if (!table_keys) {
         throw_message_error(error, CONFIGURATION_KEYS);
-        exit(ENOKEY);
+        exit(EXIT_FAILURE);
     }
 
     const size_t length = toml_array_nelem(table_keys);
     if (length == 0) {
         throw_error(keys_error);
-        exit(EINVAL);
+        exit(EXIT_FAILURE);
     }
 
     KeysArray* keys = configuration_keys_init(length);
@@ -91,7 +89,7 @@ static KeysArray* configuration_read_keys(const char* error,
             free((void*)keys->keys);
             free((void*)keys);
             throw_error(key_error);
-            exit(EINVAL);
+            exit(EXIT_FAILURE);
         }
 
         keys->keys[i] = key.u.s;
@@ -106,7 +104,7 @@ static void configuration_read_class_names(Configuration* configuration,
     if (!classNames) {
         configuration_free(configuration);
         throw_message_error(CONFIGURATION_MISSING_ERROR, CLASS_KEY);
-        exit(ENOKEY);
+        exit(EXIT_FAILURE);
     }
 
     configuration->classKeys = configuration_read_keys(CLASSNAMES_MISSING_KEY_ERROR,
@@ -119,7 +117,7 @@ static char* configuration_get_file_buffer(long file_size) {
     char* buffer = malloc(file_size);
     if (buffer == NULL) {
         throw_error(ALLOCATION_ERROR);
-        exit(ENOMEM);
+        exit(EXIT_FAILURE);
     }
 
     return buffer;
@@ -128,7 +126,7 @@ static char* configuration_get_file_buffer(long file_size) {
 Configuration* configuration_read() {
     Configuration* configuration = configuration_init();
     if (!configuration) {
-        exit(ENOMEM);
+        exit(EXIT_FAILURE);
     }
 
     File* file = file_read(CONFIGURATION_FILE);
@@ -141,7 +139,7 @@ Configuration* configuration_read() {
     if (!toml) {
         configuration_free(configuration);
         throw_message_error(CONFIGURATION_READ_CONFIG_ERROR, CONFIGURATION_FILE);
-        exit(EIO);
+        exit(EXIT_FAILURE);
     }
 
     configuration_read_class_names(configuration, toml);

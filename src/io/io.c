@@ -1,9 +1,6 @@
 #include "io/io.h"
 
-#include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "errors/errors.h"
 #include "file/file.h"
@@ -15,14 +12,14 @@ char* io_read(const char* name) {
     if (buffer == NULL) {
         file_free(file);
         throw_error(ALLOCATION_ERROR);
-        exit(ENOMEM);
+        exit(EXIT_FAILURE);
     }
 
     size_t bytes_read = fread(buffer, sizeof(char), file->size, file->file);
     if (bytes_read < (size_t)file->size) {
         file_free(file);
         throw_error(FILE_READ_ERROR);
-        exit(EIO);
+        exit(EXIT_FAILURE);
     }
 
     file_free(file);
